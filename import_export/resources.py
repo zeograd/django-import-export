@@ -372,6 +372,11 @@ class Resource(six.with_metaclass(DeclarativeMetaclass)):
                                                         real_dry_run)
                 else:
                     self.import_obj(instance, row, real_dry_run)
+                    
+                    # ensure that new objects will use a generated pk
+                    if new:
+                        instance.pk = None
+                    
                     if self.skip_row(instance, original):
                         row_result.import_type = RowResult.IMPORT_TYPE_SKIP
                     else:
